@@ -52,6 +52,7 @@ coverage/
 .parcel-cache/
 .eslintcache
 .stylelintcache
+.npm-cache/
 *.tsbuildinfo
 
 # ---- 环境变量（含密钥，绝不提交） ----

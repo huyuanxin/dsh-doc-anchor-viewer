@@ -4,6 +4,30 @@
   "type": "module",
   "description": "文档锚点视图：用 docx-preview 按 Word 版式渲染 docx，并把大纲/自定义锚点做成可跳转的定位点，供任意会话复用。",
   "icon": "./icon.svg",
+  "license": "MIT",
+  "author": {
+    "name": "huyuanxin",
+    "email": "huyuanxin1999@outlook.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huyuanxin/dsh-doc-anchor-viewer.git"
+  },
+  "homepage": "https://github.com/huyuanxin/dsh-doc-anchor-viewer#readme",
+  "bugs": {
+    "url": "https://github.com/huyuanxin/dsh-doc-anchor-viewer/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "docx",
+    "word",
+    "anchor",
+    "outline",
+    "document-review",
+    "annotation"
+  ],
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
@@ -15,7 +39,8 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build:client": "node scripts/build-docx-preview.mjs",
