@@ -44,7 +44,7 @@
   ],
   "scripts": {
     "build:client": "node scripts/build-docx-preview.mjs",
-    "test": "node --test test/run.mjs test/client-load.mjs test/render-smoke.mjs test/summary.mjs test/judge.mjs test/jump.mjs test/sidebar-tab.mjs"
+    "test": "node --test test/run.mjs test/client-load.mjs test/render-smoke.mjs test/summary.mjs test/judge.mjs test/jump.mjs test/sidebar-tab.mjs test/zip.mjs"
   },
   "dsh": {
     "bundle": {
