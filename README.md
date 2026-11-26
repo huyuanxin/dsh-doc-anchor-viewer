@@ -226,6 +226,8 @@ doc_viewer action=set_marks docId=dc6eacfa9303a204d replace=true marks=[...]
 - 只写插件自己的数据目录：`<profile>/doc-anchor-viewer/`（`docs.json` 索引 + `docs/<docId>.json`）。
 - 「从本机选择…」上传的文件会复制到该目录下的 `uploads/`；移除登记不会删除源文件。
 - 单文件上限 `maxDocxMb`（默认 30MB）——预览要把整个文件 base64 送进浏览器。
+- **解析时只解 ZIP 里需要的两个条目**（`word/document.xml`、`word/styles.xml`）：图片、嵌入对象一概不解压。一份 8MB 的文档，省下的是 8MB 常驻内存与一次全文 inflate。
+- **解压有上限**：单条目 64MB、全部条目合计 256MB。docx 就是 ZIP，而 ZIP 能被造出来骗过「文件 ≤30MB」这道检查——实测一个 65KB 的条目能膨胀出 64MB。超限的文件会被拒绝并给出可读提示，不会把宿主进程撑爆。
 
 ## 权限、外部服务与风险（请先读这一节）
 
@@ -336,7 +338,7 @@ Host 用自己的解析器算段落（9 千段级的文件是毫秒级），渲�
 ```bash
 npm install            # 安装 docx-preview 与 esbuild
 npm run build:client   # 把 docx-preview 打成 IIFE 注入 lib/client.js 的标记区
-npm test               # 7 个文件、66 项：解析 / 锚点规则 / Host 服务 / 契约 / 渲染 / 侧栏
+npm test               # 8 个文件、76 项：解析 / 锚点规则 / Host 服务 / 契约 / 渲染 / 侧栏 / ZIP 容器安全
 ```
 
 `lib/client.js` 是一份手写的 Client 模块，docx-preview 以 IIFE 内联在标记注释之间（DSH 的浏览器模块表只提供 `react`，不解析插件的 node_modules，页面也没有可引用的静态资源 URL，内联是唯一刷新即生效的方式）。改完 client.js 记得跑一次 `build:client`。
