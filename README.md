@@ -357,6 +357,8 @@ cordis.patch.yml 把 Host 那一行插进 profile
 
 入口就是 `lib/index.js` 里的 `export function apply(ctx, config)`（外加 `Config` 的 `~standard` 校验），符合 DSH 插件规范；`cordis.patch.yml` 负责把 Host 那一行插进 profile，浏览器半边由 `dsh.client.platform = "web"` 声明。
 
+**CI**：`.github/workflows/ci.yml` 在每次 push（任意分支）和每个 PR 上跑 `npm ci && npm test`，Node 22 / 24 双版本矩阵；同一 ref 连续推送会取消上一次。PR 合并前的红灯就来自这里。
+
 **发布**：`.github/workflows/npm-publish.yml` 在 GitHub Release 发布时用 Trusted Publishing（OIDC）跑 `npm ci && npm test && npm publish`，不需要 `NPM_TOKEN`。
 
 ## 分类与许可
