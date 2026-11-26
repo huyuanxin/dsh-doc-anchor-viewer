@@ -1,6 +1,6 @@
 {
   "name": "dsh-doc-anchor-viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "文档锚点视图：用 docx-preview 按 Word 版式渲染 docx，并把大纲/自定义锚点做成可跳转的定位点，供任意会话复用。",
   "icon": "./icon.svg",
