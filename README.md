@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/dsh-doc-anchor-viewer.svg)](https://www.npmjs.com/package/dsh-doc-anchor-viewer)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-2ea44f.svg)](https://github.com/topics/dsh-plugin)
+[![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/huyuanxin/dsh-doc-anchor-viewer)
 
 把 `.docx` 按 **Word 自己的版式**渲染出来，并把「大纲」与「自定义标记」做成可跳转的锚点：点左边、右边滚到位并闪一下高亮。Agent 也能用同一套锚点读原文，不必把整篇文档塞进上下文。
 
