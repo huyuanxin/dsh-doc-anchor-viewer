@@ -338,7 +338,7 @@ Host 用自己的解析器算段落（9 千段级的文件是毫秒级），渲�
 ```bash
 npm install            # 安装 docx-preview 与 esbuild
 npm run build:client   # 把 docx-preview 打成 IIFE 注入 lib/client.js 的标记区
-npm test               # 8 个文件、76 项：解析 / 锚点规则 / Host 服务 / 契约 / 渲染 / 侧栏 / ZIP 容器安全
+npm test               # 8 个文件、77 项：解析 / 锚点规则 / Host 服务 / 契约 / 渲染 / 侧栏 / ZIP 容器安全
 ```
 
 `lib/client.js` 是一份手写的 Client 模块，docx-preview 以 IIFE 内联在标记注释之间（DSH 的浏览器模块表只提供 `react`，不解析插件的 node_modules，页面也没有可引用的静态资源 URL，内联是唯一刷新即生效的方式）。改完 client.js 记得跑一次 `build:client`。

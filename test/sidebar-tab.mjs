@@ -64,10 +64,6 @@ test('S2 路径比较忽略大小写与分隔符（Windows 用户粘贴的路径
     const slash = await svc.getDocByPath({ filePath: p.replace(/\\/g, '/') })
     assert.equal(slash.found, true, '正斜杠写法要能命中')
 
-    // 大写
-    const upper = await svc.getDocByPath({ filePath: p.toUpperCase() })
-    assert.equal(upper.found, true, '大小写不同要能命中')
-
     // 末尾多一个分隔符
     const trailing = await svc.getDocByPath({ filePath: p + '\\' })
     assert.equal(trailing.found, true, '末尾分隔符要能容忍')
@@ -75,6 +71,47 @@ test('S2 路径比较忽略大小写与分隔符（Windows 用户粘贴的路径
     // 带引号（用户从资源管理器复制）
     const quoted = await svc.getDocByPath({ filePath: '"' + p + '"' })
     assert.equal(quoted.found, true, '两端引号要剥掉')
+
+    // 大小写：只在 Windows 上折平，而且这正是**故意的**——POSIX 的 a.docx 与 A.DOCX
+    // 是两个真实存在的不同文件，折平会把两条记录串成一个，比"命中不了"更糟。
+    // 所以这条断言必须按平台分支，否则在 Linux CI 上测的是别人的文件系统语义。
+    const upper = await svc.getDocByPath({ filePath: p.toUpperCase() })
+    if (process.platform === 'win32') {
+      assert.equal(upper.found, true, 'Windows 上大小写不同要能命中')
+    } else {
+      assert.equal(upper.found, false, 'POSIX 上大小写不同就是另一个文件，不能命中')
+    }
+  })
+})
+
+/**
+ * S2 的 Windows 分支在 Linux CI 上永远走不到，而它恰恰是 Windows 用户的**主路径**。
+ * `getDocByPath` 是在调用时读 `process.platform` 的，所以这里把它临时换成 win32，
+ * 让"大小写折平"这件事在 ubuntu-latest 上也能被真实执行到——不是伪造结论，
+ * 而是给同一个实现换一个平台输入。
+ */
+test('S2b Windows 分支：换平台也要把大小写折平（Linux CI 上同样验证得到）', async () => {
+  await withTemp(async (dir) => {
+    const svc = new DocAnchorViewer({}, {})
+    const p = join(dir, 'c.docx')
+    writeFileSync(p, makeDocx([para('标题', 'H1')], stylesXml([{ id: 'H1', name: 'heading 1', outlineLvl: 0 }])))
+    const open = await svc.openDoc({ filePath: p })
+    assert.equal(open.ok, true)
+
+    const real = process.platform
+    Object.defineProperty(process, 'platform', { value: 'win32', configurable: true })
+    try {
+      assert.equal(process.platform, 'win32', '前提：平台已经换掉了')
+      const upper = await svc.getDocByPath({ filePath: p.toUpperCase() })
+      assert.equal(upper.found, true, 'Windows 上大小写不同要能命中')
+      assert.equal(upper.doc.id, open.doc.id, '命中的必须是同一条记录')
+      // 分隔符与大小写叠加的写法：Windows 用户从各种地方复制出来的样子
+      const mixed = await svc.getDocByPath({ filePath: p.toUpperCase().replace(/\//g, '\\') + '\\' })
+      assert.equal(mixed.found, true, '反斜杠 + 大写 + 末尾分隔符要一起容忍')
+    } finally {
+      Object.defineProperty(process, 'platform', { value: real, configurable: true })
+    }
+    assert.equal(process.platform, real, '平台必须还原，不能漏给后面的用例')
   })
 })
 
