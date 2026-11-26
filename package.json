@@ -1,0 +1,39 @@
+{
+  "name": "dsh-doc-anchor-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "文档锚点视图：用 docx-preview 按 Word 版式渲染 docx，并把大纲/自定义锚点做成可跳转的定位点，供任意会话复用。",
+  "icon": "./icon.svg",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib/*.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "scripts": {
+    "build:client": "node scripts/build-docx-preview.mjs",
+    "test": "node --test test/run.mjs test/client-load.mjs test/render-smoke.mjs test/summary.mjs test/judge.mjs test/jump.mjs test/sidebar-tab.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "dependencies": {
+    "docx-preview": "^0.4.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

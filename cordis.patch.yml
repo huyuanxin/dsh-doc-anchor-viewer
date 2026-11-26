@@ -1,0 +1,11 @@
+# 文档锚点视图：一行承载 Host 半边（登记 + 锚点解析 + Agent 工具）
+# 与 Client 半边（Word 版式预览 + 锚点跳转面板）。
+# 浏览器模块表只挂「说明符恰为裸包名」的那一行，subpath row 会丢浏览器半边。
+- insert:
+    - id: dsh-doc-anchor-viewer
+      name: dsh-doc-anchor-viewer
+      config:
+        # 数据目录留空表示按 profile → DSH_HOME → 当前目录 顺序自动选址。
+        dataDir: ''
+        # 单个 docx 的大小上限（MB）——预览要把整个文件 base64 送进浏览器。
+        maxDocxMb: 30

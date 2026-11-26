@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "title": "Document anchor view",
+    "description": "Renders a .docx with Word's own layout and turns its headings and your own marks into jump targets: pick an item on the left and the document scrolls to that spot. Severity and category are free text, so it is not tied to one industry — contract review, proposal review, clinical notes and code review all use the same mechanism. Ask the assistant to call doc_viewer to open a document, take a sectioned digest that already carries anchors, and write the key points back in one call. It only reads your documents and stores its index and marks inside its own data directory."
+  },
+  "panel": "Document anchor",
+  "open": "Open",
+  "refresh": "Refresh",
+  "outline": "Outline",
+  "marks": "Marks",
+  "empty": "No document opened yet"
+}
